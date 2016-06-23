@@ -1,0 +1,6 @@
+godfather/**/*.o
+
+godfather/core/asm-offset.h
+godfather/core/asm-offset.s
+
+godfather/hyperdbg.sys

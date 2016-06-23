@@ -1,0 +1,23 @@
+--- mmu.c	2014-06-15 10:55:20.307710483 +0200
++++ mmu.c	2014-07-26 15:06:58.617265938 +0200
+@@ -130,7 +133,7 @@
+ 
+ #ifdef ENABLE_PAE
+   // FIXME
+-#else  
++#else
+   /* Fix entry 0x300 of PD with new cr3. Indeed, this entry must map the PD
+      itself, as it's the one used to map Page Tables into Virtual Memory */
+   pde_addr = (hvm_address) (GET32L(phy) + (0x300 * sizeof(PTE)));
+@@ -138,7 +141,10 @@
+   pde.PageBaseAddr = (CR3_ALIGN((hvm_address) GET32L(phy)) >> 12);
+   r = MmuWritePhysicalRegion(pde_addr, &pde, 4);
+ #endif
+-  
++
++  /* HACK FOR GDBx PURPOSES */
++  /* *pcr3 = cr3; */
++  cache_enabled = TRUE;
+   return HVM_STATUS_SUCCESS;
+   
+  error:
